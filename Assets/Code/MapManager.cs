@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance;
 
-    public Module[] Modules;
+    public List<Module> Modules;
 
     public GameObject ModulePrefab;
     public GameObject LinePrefab;
@@ -26,6 +28,19 @@ public class MapManager : MonoBehaviour
         Instance = this;
         
         GenerateMap(15,2);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+            
+            GenerateMap(20,3);
+        }
     }
 
     public void GenerateMap(int _amount, int _connections)
@@ -65,6 +80,7 @@ public class MapManager : MonoBehaviour
         }
 
         Player.Instance.Move(first);
+        Modules = modules;
     }
 
     public Module ModuleAtLocation(Vector3 _location, List<Module> _modules)
@@ -88,7 +104,7 @@ public class MapManager : MonoBehaviour
 
     public void DrawLine(Module _moduleOne, Module _moduleTwo)
     {
-        GameObject line = Instantiate(LinePrefab);
+        GameObject line = Instantiate(LinePrefab, transform, true);
         LineRenderer renderer = line.GetComponent<LineRenderer>();
         
         renderer.SetPosition(0, _moduleOne.transform.position);

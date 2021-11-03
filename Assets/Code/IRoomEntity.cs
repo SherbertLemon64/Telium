@@ -5,7 +5,5 @@ using UnityEngine.Events;
 
 public interface IRoomEntity
 {
-    Color GetColor();
-    Sprite GetSprite();
     UnityEvent<IRoomEntity> GetEnterRoomCallback();
 }

@@ -7,10 +7,7 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour, IRoomEntity
 {
 	public static Player Instance;
-	public Module ModuleOn;
-
-    [SerializeField] private Color color;
-    [SerializeField] private Sprite sprite;
+	public Module CurrentModule;
 
 	public void Awake()
 	{
@@ -25,15 +22,11 @@ public class Player : MonoBehaviour, IRoomEntity
 
 	public void Move(Module _moveTo)
 	{
-		ModuleOn.occupier = null;
-		ModuleOn = _moveTo;
-		ModuleOn.occupier = this;
+		CurrentModule.Occupier = null;
+		CurrentModule = _moveTo;
+		CurrentModule.Occupier = this;
 		transform.position = _moveTo.transform.position;
 	}
 
-	public Color GetColor() => color;
-
-	public Sprite GetSprite() => sprite;
-
-    public UnityEvent<IRoomEntity> GetEnterRoomCallback() =>  null;
+	public UnityEvent<IRoomEntity> GetEnterRoomCallback() =>  null;
 }

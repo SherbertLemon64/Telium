@@ -58,7 +58,7 @@ public class MapManager : MonoBehaviour
                     module.Neighbours.Add(newModule);
                     newModule.Neighbours.Add(module);
                     itemsToAdd.Enqueue(newModule);
-                    modules.Add(module);
+                    modules.Add(newModule);
                     DrawLine(module,newModule);
                 }
             }

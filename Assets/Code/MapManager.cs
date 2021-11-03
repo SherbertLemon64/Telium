@@ -63,6 +63,8 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+
+        Player.Instance.Move(first);
     }
 
     public Module ModuleAtLocation(Vector3 _location, List<Module> _modules)

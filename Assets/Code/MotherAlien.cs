@@ -40,7 +40,9 @@ public class MotherAlien : Enemy
                 }
             }
         }
-
+        
+        CheckIfSeen();
+        
         spawnCountdown++;
     }
 
@@ -65,9 +67,13 @@ public class MotherAlien : Enemy
         if (_entity is Player)
         {
             Module runTo = CurrentModule.RandomUnocupiedNeighbour();
-            if (runTo == null)
+            if (runTo == null || runTo == Player.Instance.LastModule)
             {
-                Destroy(gameObject);
+                Kill();
+            }
+            else
+            {
+                Move(runTo);
             }
         }
     }

@@ -242,6 +242,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Health: 3
+  ViewingDist: 5
   LastModule: {fileID: 0}
 --- !u!61 &1086918886
 BoxCollider2D:

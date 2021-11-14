@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Player : RoomEntity
 {
 	public static Player Instance;
 	public int Health = 3;
 
+	public float ViewingDist = 5.0f;
+	
 	public Module LastModule;
 
 	public void Awake()
@@ -20,18 +23,21 @@ public class Player : RoomEntity
 	public void Start()
 	{
 		GetEnterRoomCallback.AddListener(TakeDamage);
-		Move(FindObjectOfType<Module>());
+		Module start = MapManager.Instance.Modules[Random.Range(0, MapManager.Instance.Modules.Count)];
+		while (!(start.Occupier is null))
+		{
+			start = MapManager.Instance.Modules[Random.Range(0, MapManager.Instance.Modules.Count)];
+		}
+		
+		Move(start);
 	}
 
 	public new void Move(Module _moveTo)
 	{
-		if (!(LastModule is null))
-		{
-			LastModule.Occupier = null;
-		}
 		if (!(CurrentModule is null))
 		{
 			LastModule = CurrentModule;
+			CurrentModule.Occupier = null;
 		}
 
 		CurrentModule = _moveTo;

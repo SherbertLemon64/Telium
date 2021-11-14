@@ -101,7 +101,7 @@ MonoBehaviour:
   GetEnterRoomCallback:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6480429505530348330}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -174,5 +174,10 @@ PrefabInstance:
 --- !u!4 &6480429505530348340 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7009943043130862915, guid: 4e999ac4e66cf154e84c10c80fe57263, type: 3}
+  m_PrefabInstance: {fileID: 4082317634095410807}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6480429505530348330 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7009943043130862941, guid: 4e999ac4e66cf154e84c10c80fe57263, type: 3}
   m_PrefabInstance: {fileID: 4082317634095410807}
   m_PrefabAsset: {fileID: 0}

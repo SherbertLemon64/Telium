@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,7 @@ public class MotherAlien : Enemy
     public int Moves;
     
     private int spawnCountdown = 0;
-    private const int TurnsToSpawn = 5;
+    private const int TurnsToSpawn = 3;
 
     public void Start()
     {
@@ -76,5 +77,20 @@ public class MotherAlien : Enemy
                 Move(runTo);
             }
         }
+    }
+    
+    public override void Kill()
+    {
+        StartCoroutine("DieSlowlyAndPainfully");
+    }
+
+    public IEnumerator DieSlowlyAndPainfully()
+    {
+        TurnManager.PendingRemovals.Add(this);
+        var duration = GetComponentInChildren<ParticleSystem>().main.duration;
+
+        yield return new WaitForSecondsRealtime(duration);
+        Destroy(gameObject);
+        SceneManager.LoadScene(2);
     }
 }

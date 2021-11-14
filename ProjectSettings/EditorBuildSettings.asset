@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/KittenlovingScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/StartScene.unity
+    guid: 5aab7bed87a6c204697e8a3088ce3eaf
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 98c4137283e6bbf44a223b6360fa24fd
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 652b7e408e89fb54ca440a2b359cca77
   m_configObjects: {}

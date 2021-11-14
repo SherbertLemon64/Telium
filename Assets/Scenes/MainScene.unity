@@ -5236,6 +5236,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  Renderer: {fileID: 2029280545}
   OffspringPrefab: {fileID: 3226342281184209375, guid: e823381a625e366438b09d210b28f108, type: 3}
   Moves: 1
 --- !u!212 &2029280545

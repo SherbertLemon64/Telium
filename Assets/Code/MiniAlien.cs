@@ -45,4 +45,18 @@ public class MiniAlien : Enemy
             Kill();
         }
     }
+
+    public override void Kill()
+    {
+        StartCoroutine("DieSlowlyAndPainfully");
+    }
+
+    public IEnumerator DieSlowlyAndPainfully()
+    {
+        TurnManager.PendingRemovals.Add(this);
+        var duration = GetComponentInChildren<ParticleSystem>().main.duration;
+
+        yield return new WaitForSecondsRealtime(duration);
+        Destroy(gameObject);
+    }
 }

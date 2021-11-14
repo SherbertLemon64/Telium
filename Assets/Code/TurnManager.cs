@@ -11,9 +11,8 @@ public static class TurnManager
     public static void EnemyTurn()
     {
         foreach (Enemy e in Enemies)
-        {
-            e.Turn();
-        }
+            if (!PendingRemovals.Contains(e))
+                e.Turn();
         
         Enemies.AddRange(PendingAdditions);
         PendingAdditions.Clear();

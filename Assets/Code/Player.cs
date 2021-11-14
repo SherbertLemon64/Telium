@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class Player : RoomEntity
@@ -50,5 +51,10 @@ public class Player : RoomEntity
 	public void TakeDamage(RoomEntity _entity)
 	{
 		Health--;
+
+		if (Health == 0)
+		{
+			SceneManager.LoadScene(3);
+		}
 	}
 }

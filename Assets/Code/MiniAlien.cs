@@ -55,7 +55,7 @@ public class MiniAlien : Enemy
     {
         TurnManager.PendingRemovals.Add(this);
         var duration = GetComponentInChildren<ParticleSystem>().main.duration;
-
+        Renderer.color = Color.clear;
         yield return new WaitForSecondsRealtime(duration);
         Destroy(gameObject);
     }

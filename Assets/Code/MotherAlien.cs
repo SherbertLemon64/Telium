@@ -1,22 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
-public class MotherAlien : MonoBehaviour, IRoomEntity
+public class MotherAlien : Enemy
 {
-    public Module CurrentModule;
-
     public GameObject OffspringPrefab;
     public int Moves;
     
     private int spawnCountdown = 0;
     private const int TurnsToSpawn = 5;
-    
-    public UnityEvent<IRoomEntity> GetEnterRoomCallback() =>  null;
-    
-    public void Turn()
+
+    public void Start()
+    {
+        TurnManager.Enemies.Add(this);
+        GetEnterRoomCallback.AddListener(Attacked);
+        // just grab some random room for now, optimize this later maybe idk
+        Move(MapManager.Instance.Modules[Random.Range(0,MapManager.Instance.Modules.Count)]);
+    }
+
+    public override void Turn()
     {
         if (spawnCountdown >= TurnsToSpawn)
         {
@@ -27,7 +33,11 @@ public class MotherAlien : MonoBehaviour, IRoomEntity
         {
             for (int i = 0; i < Moves; i++)
             {
-                Move(CurrentModule.RandomUnocupiedNeighbour());  
+                Module move = CurrentModule.RandomUnocupiedNeighbour();
+                if (!(move is null))
+                {
+                    Move(move);  
+                }
             }
         }
 
@@ -37,17 +47,28 @@ public class MotherAlien : MonoBehaviour, IRoomEntity
     public void SpawnOffspring()
     {
         Module spawnModule = CurrentModule.RandomUnocupiedNeighbour();
+
+        if (spawnModule == null)
+        {
+            return;
+        }
         
         GameObject offspring = Instantiate(OffspringPrefab);
         MiniAlien script = offspring.GetComponent<MiniAlien>();
+        TurnManager.PendingAdditions.Add(script);
+        
         script.Move(spawnModule);
     }
 
-    public void Move(Module _moveTo)
+    public void Attacked(RoomEntity _entity)
     {
-        CurrentModule.Occupier = null;
-        CurrentModule = _moveTo;
-        CurrentModule.Occupier = this;
-        transform.position = _moveTo.transform.position;
+        if (_entity is Player)
+        {
+            Module runTo = CurrentModule.RandomUnocupiedNeighbour();
+            if (runTo == null)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

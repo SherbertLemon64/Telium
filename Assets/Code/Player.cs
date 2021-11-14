@@ -1,32 +1,48 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour, IRoomEntity
+public class Player : RoomEntity
 {
 	public static Player Instance;
-	public Module CurrentModule;
+	public int Health = 3;
+
+	public Module LastModule;
 
 	public void Awake()
 	{
 		Instance = this;
 	}
 
-	void Start()
+	public void Start()
 	{
-		// just grab some random room for now, optimize this later maybe idk
+		GetEnterRoomCallback.AddListener(TakeDamage);
 		Move(FindObjectOfType<Module>());
 	}
 
-	public void Move(Module _moveTo)
+	public new void Move(Module _moveTo)
 	{
-		CurrentModule.Occupier = null;
+		if (!(LastModule is null))
+		{
+			LastModule.Occupier = null;
+		}
+		if (!(CurrentModule is null))
+		{
+			LastModule = CurrentModule;
+		}
+
 		CurrentModule = _moveTo;
 		CurrentModule.Occupier = this;
 		transform.position = _moveTo.transform.position;
+
+		TurnManager.EnemyTurn();
 	}
 
-	public UnityEvent<IRoomEntity> GetEnterRoomCallback() =>  null;
+	public void TakeDamage(RoomEntity _entity)
+	{
+		Health--;
+	}
 }

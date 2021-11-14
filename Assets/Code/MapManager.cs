@@ -6,6 +6,17 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
+public static class Directions
+{
+    public static readonly Vector3[] CardinalDirections = new[]
+    {
+        Vector3.up,
+        Vector3.down,
+        Vector3.left,
+        Vector3.right
+    };
+}
+
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance;
@@ -15,32 +26,13 @@ public class MapManager : MonoBehaviour
     public GameObject ModulePrefab;
     public GameObject LinePrefab;
 
-    public readonly Vector3[] CardinalDirections = new[]
-    {
-        Vector3.up,
-        Vector3.down,
-        Vector3.left,
-        Vector3.right
-    };
+    public Hallway DisabledHallway;
     
-    void Start()
+    void Awake()
     {
         Instance = this;
         
-        GenerateMap(15,2);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            foreach (Transform child in transform)
-            {
-                Destroy(child.gameObject);
-            }
-            
-            GenerateMap(20,3);
-        }
+        GenerateMap(20,3);
     }
 
     public void GenerateMap(int _amount, int _connections)
@@ -58,7 +50,7 @@ public class MapManager : MonoBehaviour
 
             for (int i = 0; i < _connections; i++)
             {
-                Vector3 location = module.transform.position + CardinalDirections[Random.Range(0, 4)] * 2.5f;
+                Vector3 location = module.transform.position + Directions.CardinalDirections[Random.Range(0, 4)] * 2.5f;
                 Module locatedModule = ModuleAtLocation(location, modules);
 
                 if (locatedModule != null && !module.Neighbours.Contains(locatedModule))
@@ -105,6 +97,12 @@ public class MapManager : MonoBehaviour
     public void DrawLine(Module _moduleOne, Module _moduleTwo)
     {
         GameObject line = Instantiate(LinePrefab, transform, true);
+        Hallway hallway = line.GetComponent<Hallway>();
+        hallway.Connections = new[]
+        {
+            _moduleOne,
+            _moduleTwo
+        };
         LineRenderer renderer = line.GetComponent<LineRenderer>();
         
         renderer.SetPosition(0, _moduleOne.transform.position);

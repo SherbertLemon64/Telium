@@ -1,20 +1,22 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "RoomEntity", menuName = "Scriptables/Room Entity", order = 1)]
-class RoomEntity : ScriptableObject, IRoomEntity
+public abstract class RoomEntity : MonoBehaviour
 {
-    public Sprite sprite;
-    public Color color;
-    public UnityEvent<IRoomEntity> enterCallback;
-
-    public Color GetColor() => color;
-
-    public UnityEvent<IRoomEntity> GetEnterRoomCallback() => enterCallback;
-
-    public Sprite GetSprite() => sprite;
-
+    public Module CurrentModule;
+    public void Move(Module _moveTo)
+    {
+        if (!(CurrentModule is null))
+        {
+            CurrentModule.Occupier = null;
+        }
+        CurrentModule = _moveTo;
+        CurrentModule.Occupier = this;
+        transform.position = _moveTo.transform.position;
+    }
+    
+   
+    public UnityEvent<RoomEntity> GetEnterRoomCallback = new UnityEvent<RoomEntity>();
 }

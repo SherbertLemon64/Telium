@@ -237,7 +237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37652dce3c71e2a44a6341dee4bba902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ModuleOn: {fileID: 0}
+  CurrentModule: {fileID: 0}
+  GetEnterRoomCallback:
+    m_PersistentCalls:
+      m_Calls: []
+  Health: 3
 --- !u!61 &1086918886
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -377,6 +381,7 @@ MonoBehaviour:
   Modules: []
   ModulePrefab: {fileID: 9198519468802635077, guid: 79250f9cab329b14789cbee4b8d333a0, type: 3}
   LinePrefab: {fileID: 7507199597421099761, guid: 9f4898e1ea60bb44aaf3561040e5e843, type: 3}
+  DisabledHallway: {fileID: 0}
 --- !u!1 &2029280543
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +413,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentModule: {fileID: 0}
-  OffspringPrefab: {fileID: 0}
+  GetEnterRoomCallback:
+    m_PersistentCalls:
+      m_Calls: []
+  OffspringPrefab: {fileID: 3226342281184209375, guid: e823381a625e366438b09d210b28f108, type: 3}
+  Moves: 1
 --- !u!212 &2029280545
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -447,8 +456,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1651258039
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1385f152fd01c994eada7a6115152460, type: 3}
   m_Color: {r: 0.2779241, g: 0.6698113, b: 0.20536669, a: 1}

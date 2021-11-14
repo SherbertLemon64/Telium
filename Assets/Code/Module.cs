@@ -9,29 +9,31 @@ public class Module : MonoBehaviour
     public List<int> BlockedPaths;
     public ModuleComponent Component;
     public List<Module> Neighbours = new List<Module>();
-    public IRoomEntity Occupier;
+    public RoomEntity Occupier;
 
     void OnMouseDown()
     {
         if (Neighbours.Contains(Player.Instance.CurrentModule))
         {
+            if (!(Occupier is null))
+            {
+                Occupier.GetEnterRoomCallback.Invoke(Player.Instance);
+            }
             Player.Instance.Move(this);
-            if (Occupier != null)
-                if (Occupier.GetEnterRoomCallback() != null)
-                    Occupier.GetEnterRoomCallback().Invoke(Player.Instance);
         }
     }
     public Module RandomUnocupiedNeighbour()
     {
-        List<Module> spawnPoints = new List<Module>(Neighbours);
-        foreach (Module m in spawnPoints)
+        List<Module> validPoints = new List<Module>();
+        
+        foreach (Module m in Neighbours)
         {
-            if (false) // if it has an entity in it (code being written) 
+            if (m.Occupier is null)
             {
-                spawnPoints.Remove(m);
+                validPoints.Add(m);
             } 
         }
         
-        return spawnPoints[Random.Range(0, spawnPoints.Count - 1)];
+        return validPoints.Count > 0 ? validPoints[Random.Range(0, validPoints.Count - 1)] : null;
     }
 }
